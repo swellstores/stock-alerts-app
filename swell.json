@@ -1,45 +1,45 @@
 {
-  "description": "Back-in-stock emails for customers, low-stock alerts for your team",
-  "id": "stock_alerts",
-  "name": "Stock Alerts",
-  "type": "admin",
-  "version": "0.1.0",
-  "permissions": [],
-  "support_email": "support@swell.is",
-  "repository_url": "https://github.com/swellstores/stock-alerts-app",
-  "highlights": [
-    {
-      "id": "back-in-stock",
-      "title": "Back-in-stock emails",
-      "description": "Customers leave their email on a sold-out product and get one email with its image, price and link the moment it's restocked."
-    },
-    {
-      "id": "low-stock",
-      "title": "Low-stock alerts for your team",
-      "description": "Admins get one email when a product drops to its threshold, and the alert resolves itself once stock is back above it."
-    },
-    {
-      "id": "threshold",
-      "title": "A threshold for every product",
-      "description": "Set a store-wide default, or give any product its own low-stock threshold on its Stock alerts tab."
-    },
-    {
-      "id": "digest",
-      "title": "Optional daily digest",
-      "description": "One summary email each morning listing every product that is still running low."
-    },
-    {
-      "id": "no-third-party",
-      "title": "Nothing else to connect",
-      "description": "Runs on Swell's own product data and notifications, with no third-party service, account or API key to set up."
-    }
-  ],
-  "images": [
-    {
-      "id": "cover",
-      "image_src": "assets/screenshots/01-cover.png",
-      "title": "Stock Alerts for Swell",
-      "description": "Back-in-stock emails for customers and low-stock alerts for your team, built into your Swell dashboard."
-    }
-  ]
+	"description": "Back-in-stock emails for customers, low-stock alerts for your team",
+	"id": "stock_alerts",
+	"name": "Stock Alerts",
+	"type": "admin",
+	"version": "0.1.0",
+	"permissions": [],
+	"support_email": "support@swell.is",
+	"repository_url": "https://github.com/swellstores/stock-alerts-app",
+	"highlights": [
+		{
+			"id": "back-in-stock",
+			"title": "Back-in-stock emails",
+			"description": "Customers leave their email on a sold-out product and get one email with its image, price and link the moment it's restocked."
+		},
+		{
+			"id": "low-stock",
+			"title": "Low-stock alerts for your team",
+			"description": "Admins get one email when a product drops to its threshold, and the alert resolves itself once stock is back above it."
+		},
+		{
+			"id": "threshold",
+			"title": "A threshold for every product",
+			"description": "Set a store-wide default, or give any product its own low-stock threshold on its Stock alerts tab."
+		},
+		{
+			"id": "digest",
+			"title": "Optional daily digest",
+			"description": "One summary email each morning listing every product that is still running low."
+		},
+		{
+			"id": "no-third-party",
+			"title": "Nothing else to connect",
+			"description": "Runs on Swell's own product data and notifications, with no third-party service, account or API key to set up."
+		}
+	],
+	"images": [
+		{
+			"id": "cover",
+			"image_src": "assets/screenshots/01-cover.png",
+			"title": "Stock Alerts for Swell",
+			"description": "Back-in-stock emails for customers and low-stock alerts for your team, built into your Swell dashboard."
+		}
+	]
 }
