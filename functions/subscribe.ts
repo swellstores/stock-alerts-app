@@ -48,12 +48,16 @@ export async function post(req: SwellRequest) {
     return { subscribed: true, id: existing.id, existing: true };
   }
 
+  const appObjectId = (req.logParams as { app_id?: string } | undefined)?.app_id ?? req.appId;
+  const token = crypto.randomUUID();
   const created: { id: string } = await req.swell.post('/stock-subscriptions', {
     email: input.email,
     product_id: input.product_id,
     ...(input.variant_id ? { variant_id: input.variant_id } : {}),
     source: input.source,
     status: 'waiting',
+    token,
+    unsubscribe_url: `${req.store.admin_url}/functions/${appObjectId}/unsubscribe?token=${token}`,
   });
   return { subscribed: true, id: created.id, existing: false };
 }

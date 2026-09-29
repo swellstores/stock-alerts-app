@@ -38,6 +38,12 @@ image, the price and a button to the product page.
   subscriptions stay waiting until the next restock after it's switched back on. New
   subscriptions are still saved. An admin who sets a subscription to *Notified* by hand
   always emails that customer.
+- **Unsubscribe link.** Every back-in-stock email ends with a "Cancel it" link. Clicking it
+  sets that subscription to *Cancelled* and opens a short confirmation page naming the
+  product; no email is sent. A link that was already used, or whose subscription was already
+  notified, shows "This alert is already switched off." The link is saved on the
+  subscription (**Unsubscribe link** on its record page), uses the app's id rather than its
+  slug, and needs no API key, so it always reaches the store's live environment.
 
 It shows up under **Products › Stock alerts**, with *All*, *Waiting*, *Notified* and
 *Cancelled* tabs. An admin can cancel a waiting subscription. Once a subscription is notified
@@ -47,6 +53,9 @@ Each product's edit page gets a **Stock alerts** tab listing that product's subs
 **How it's built.** `functions/subscribe.ts` is a public `POST` route that validates the
 input (`functions/lib/validate.ts`) and writes to the app's `stock-subscriptions`
 collection (`models/stock-subscriptions.json`, `content/stock-subscriptions.json`).
+Each new subscription gets a random `token` and an `unsubscribe_url`;
+`functions/unsubscribe.ts` is the public `GET` route that link opens, and
+`functions/lib/pages.ts` holds its confirmation pages.
 `functions/stock-changed.ts` runs on `product.stock_adjusted`; `functions/lib/stock-rules.ts`
 decides which product and variant were restocked, and `functions/lib/subscriptions.ts`
 finds waiting subscriptions and sets them to `notified` in batches. The email is the
@@ -207,6 +216,8 @@ The same request works from any framework or headless storefront:
   restock, and a warning is logged.
 - **The digest lists at most 500 open alerts.**
 - **One email per subscription record.** A notified subscription is never emailed again.
+- **Unsubscribing stops one subscription.** The link cancels only the subscription it was
+  sent for; the customer can still subscribe to the same product again.
 - **Duplicate alerts are possible.** Two stock changes to the same product at the same
   instant could each open an alert, because checking for an open alert and creating one is
   not a single step.

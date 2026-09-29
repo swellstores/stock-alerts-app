@@ -4,6 +4,10 @@ import { createMockRequest } from "../helpers/mock-request";
 
 const PRODUCT_ID = "6abb4b2879ef310013b8a843";
 const VARIANT_ID = "6ab6833878271b0012b94110";
+const APP_OBJECT_ID = "6abb4869ac60e9001220be06";
+const ADMIN_URL = "https://test-store.swell.store";
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+const unsubscribeFields = { token: expect.any(String), unsubscribe_url: expect.any(String) };
 
 interface Setup {
   settings?: Record<string, any>;
@@ -22,7 +26,8 @@ function request(data: Record<string, any>, setup: Setup = {}) {
   });
   const postFn = vi.fn(async () => ({ id: "new-subscription" }));
   const settings = vi.fn(async () => ({ "stock-alerts": { back_in_stock_enabled: true, ...setup.settings } }));
-  const req = createMockRequest({ data, swell: { get, post: postFn, settings } });
+  const req = createMockRequest({ data, swell: { get, post: postFn, settings }, store: { admin_url: ADMIN_URL } });
+  req.logParams = { app_id: APP_OBJECT_ID };
   return { req, get, post: postFn };
 }
 
@@ -51,6 +56,7 @@ describe("subscribe route", () => {
       product_id: PRODUCT_ID,
       source: "storefront",
       status: "waiting",
+      ...unsubscribeFields,
     });
   });
 
@@ -75,6 +81,7 @@ describe("subscribe route", () => {
       variant_id: VARIANT_ID,
       source: "pdp",
       status: "waiting",
+      ...unsubscribeFields,
     });
   });
 
@@ -128,7 +135,55 @@ describe("subscribe route", () => {
       product_id: PRODUCT_ID,
       source: "storefront",
       status: "waiting",
+      ...unsubscribeFields,
     });
+  });
+
+  it("saves a random token and an unsubscribe link built from the app ObjectId", async () => {
+    const { req, post: create } = request({ email: "ana@swell.is", product_id: PRODUCT_ID });
+
+    await post(req);
+    const saved = (create.mock.calls[0] as unknown[])[1] as Record<string, string>;
+    expect(saved.token).toMatch(UUID_PATTERN);
+    expect(saved.unsubscribe_url).toBe(`${ADMIN_URL}/functions/${APP_OBJECT_ID}/unsubscribe?token=${saved.token}`);
+  });
+
+  it("falls back to the app slug when the request carries no app ObjectId", async () => {
+    const { req, post: create } = request({ email: "ana@swell.is", product_id: PRODUCT_ID });
+    req.logParams = undefined;
+
+    await post(req);
+    const saved = (create.mock.calls[0] as unknown[])[1] as Record<string, string>;
+    expect(saved.unsubscribe_url).toBe(`${ADMIN_URL}/functions/stock_alerts/unsubscribe?token=${saved.token}`);
+  });
+
+  it("gives every subscription a different token", async () => {
+    const first = request({ email: "ana@swell.is", product_id: PRODUCT_ID });
+    const second = request({ email: "ana@swell.is", product_id: PRODUCT_ID });
+
+    await post(first.req);
+    await post(second.req);
+    const tokenOf = (mock: typeof first.post) => ((mock.mock.calls[0] as unknown[])[1] as Record<string, string>).token;
+    expect(tokenOf(first.post)).not.toBe(tokenOf(second.post));
+  });
+
+  it("does not return the token or unsubscribe link", async () => {
+    const { req } = request({ email: "ana@swell.is", product_id: PRODUCT_ID });
+
+    const result = (await post(req)) as Record<string, unknown>;
+    expect(result).not.toHaveProperty("token");
+    expect(result).not.toHaveProperty("unsubscribe_url");
+    expect(JSON.stringify(result)).not.toContain("unsubscribe");
+  });
+
+  it("leaves an existing waiting subscription untouched", async () => {
+    const put = vi.fn();
+    const { req, post: create } = request({ email: "ana@swell.is", product_id: PRODUCT_ID }, { existing: { id: "sub-1" } });
+    req.swell.put = put;
+
+    await expect(post(req)).resolves.toEqual({ subscribed: true, id: "sub-1", existing: true });
+    expect(create).not.toHaveBeenCalled();
+    expect(put).not.toHaveBeenCalled();
   });
 
   it("rejects bad input with 400 before touching the store", async () => {

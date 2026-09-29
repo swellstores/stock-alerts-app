@@ -25,6 +25,7 @@
     "status": "notified",
     "source": "storefront",
     "date_notified": "2026-09-29T09:00:00.000Z",
+    "unsubscribe_url": "https://example.swell.store/functions/64f1a2b3c4d5e6f7a8b9c0d0/unsubscribe?token=3f2b8c1e-5d4a-4b6f-9e2c-7a1d0b9c8e6f",
     "product_id": "64f1a2b3c4d5e6f7a8b9c0d1",
     "product": {
       "id": "64f1a2b3c4d5e6f7a8b9c0d1",

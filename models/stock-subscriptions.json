@@ -48,6 +48,17 @@
       "type": "string",
       "label": "Source",
       "description": "Where the subscription came from, for example \"storefront\"."
+    },
+    "token": {
+      "type": "string",
+      "label": "Token",
+      "description": "Random secret used by the unsubscribe link."
+    },
+    "unsubscribe_url": {
+      "type": "string",
+      "label": "Unsubscribe URL",
+      "format": "url",
+      "description": "Link the customer clicks to cancel this subscription."
     }
   },
   "events": {

@@ -50,7 +50,14 @@ class SwellRejectionImpl extends Error {
   }
 }
 
+class SwellResponseImpl extends Response {
+  constructor(data: string | object | undefined, options: ResponseInit = {}) {
+    super(typeof data === "object" ? JSON.stringify(data) : data, options);
+  }
+}
+
 (globalThis as any).SwellError = SwellErrorImpl;
+(globalThis as any).SwellResponse = SwellResponseImpl;
 (globalThis as any).SwellRejection = SwellRejectionImpl;
 
 export {};

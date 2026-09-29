@@ -9,6 +9,7 @@ When a product is out of stock, a form on the product page saves the customer's 
 - **The exact variant.** A customer who asked about a size or colour is emailed when that variant is restocked, not just any variant. You can switch this off so that when the product comes back in stock, everyone subscribed to it is emailed whatever variant they chose. A single variant restocked while the product still has stock elsewhere emails only that variant's subscribers.
 - **No duplicates.** Submitting the form twice for the same product doesn't create a second subscription, and nobody is emailed twice for the same request.
 - **Already in stock?** If the item is in stock when the form is sent, nothing is saved and your storefront can tell the customer so.
+- **Easy to opt out.** Every email has an unsubscribe link that cancels the customer's alert in one click.
 
 ## Low-stock alerts for your team
 

@@ -48,6 +48,11 @@
       "type": "text"
     },
     {
+      "id": "unsubscribe_url",
+      "label": "Unsubscribe link",
+      "type": "url"
+    },
+    {
       "id": "date_created",
       "label": "Date created",
       "type": "datetime"
@@ -80,7 +85,8 @@
         { "id": "variant", "admin_span": 2 },
         { "id": "status", "admin_span": 2, "readonly": { "status": "notified" } },
         { "id": "date_notified", "readonly": true, "admin_span": 2 },
-        { "id": "source", "readonly": true }
+        { "id": "source", "readonly": true },
+        { "id": "unsubscribe_url", "readonly": true }
       ]
     }
   ]

@@ -14,4 +14,7 @@
     <a href="{{ store.url }}/products/{{ product.slug }}" style="display:inline-block;background:#222222;color:#ffffff;text-decoration:none;font-size:16px;font-weight:bold;padding:14px 28px;border-radius:4px;">Shop now</a>
   </div>
   <p style="max-width:560px;margin:16px auto 0;text-align:center;font-size:13px;line-height:20px;color:#888888;">{{ store.name }}</p>
+  {% if unsubscribe_url %}
+  <p style="max-width:560px;margin:8px auto 0;text-align:center;font-size:13px;line-height:20px;color:#888888;">Don't want this alert? <a href="{{ unsubscribe_url }}" style="color:#888888;">Cancel it</a>.</p>
+  {% endif %}
 </div>
