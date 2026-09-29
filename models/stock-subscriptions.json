@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json.swell.store/model.json",
+  "collection": "stock-subscriptions",
+  "label": "Stock subscriptions",
+  "description": "Customers waiting to be emailed when an out-of-stock product or variant is available again.",
+  "fields": {
+    "email": {
+      "type": "string",
+      "label": "Email",
+      "format": "email",
+      "required": true,
+      "description": "Address the back-in-stock email is sent to."
+    },
+    "product_id": {
+      "type": "objectid",
+      "label": "Product ID",
+      "required": true
+    },
+    "product": {
+      "type": "link",
+      "label": "Product",
+      "model": "products",
+      "key": "product_id"
+    },
+    "variant_id": {
+      "type": "objectid",
+      "label": "Variant ID",
+      "description": "Set when the customer subscribed to a specific variant."
+    },
+    "variant": {
+      "type": "link",
+      "label": "Variant",
+      "model": "products:variants",
+      "key": "variant_id"
+    },
+    "status": {
+      "type": "string",
+      "label": "Status",
+      "enum": ["waiting", "notified", "cancelled"],
+      "default": "waiting",
+      "description": "waiting: not yet emailed. notified: the back-in-stock email was triggered. cancelled: the customer or an admin cancelled it."
+    },
+    "date_notified": {
+      "type": "date",
+      "label": "Date notified"
+    },
+    "source": {
+      "type": "string",
+      "label": "Source",
+      "description": "Where the subscription came from, for example \"storefront\"."
+    }
+  },
+  "events": {
+    "types": [
+      { "id": "created" },
+      { "id": "updated" },
+      { "id": "deleted" },
+      {
+        "id": "notified",
+        "description": "The subscription's status changed to notified.",
+        "conditions": { "$formula": "and($record.status != \"notified\", status == \"notified\")" }
+      }
+    ]
+  }
+}

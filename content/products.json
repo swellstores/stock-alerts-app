@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.swell.store/content.json",
+  "collection": "products",
+  "description": "Stock alerts tab on the product editor: per-product low-stock threshold and back-in-stock subscriptions.",
+  "fields": [
+    {
+      "id": "low_stock_threshold",
+      "label": "Low-stock threshold",
+      "type": "integer",
+      "min": 0,
+      "description": "Alert admins when this product's stock falls to or below this number. Leave empty or 0 to use the app's default threshold."
+    },
+    {
+      "id": "stock_subscriptions",
+      "label": "Stock alerts",
+      "type": "collection",
+      "collection": "apps/stock_alerts/stock-subscriptions",
+      "link": { "params": { "product_id": "id" } },
+      "fields": [
+        { "id": "email", "label": "Email", "type": "email" },
+        { "id": "variant", "label": "Variant", "type": "lookup", "model": "products:variants", "key": "variant_id" },
+        {
+          "id": "status",
+          "label": "Status",
+          "type": "select",
+          "options": [
+            { "value": "waiting", "label": "Waiting" },
+            { "value": "notified", "label": "Notified" },
+            { "value": "cancelled", "label": "Cancelled" }
+          ]
+        },
+        { "id": "date_created", "label": "Date created", "type": "datetime" }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "id": "edit",
+      "tabs": [
+        {
+          "id": "stock_alerts",
+          "label": "Stock alerts",
+          "fields": [{ "id": "low_stock_threshold" }, { "id": "stock_subscriptions" }]
+        }
+      ]
+    }
+  ]
+}

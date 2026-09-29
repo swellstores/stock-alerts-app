@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json.swell.store/content.json",
+  "collection": "stock-subscriptions",
+  "label": "Stock alerts",
+  "description": "Customers waiting for a product to come back in stock",
+  "fields": [
+    {
+      "id": "email",
+      "label": "Email",
+      "type": "email",
+      "required": true
+    },
+    {
+      "id": "product",
+      "label": "Product",
+      "type": "lookup",
+      "model": "products",
+      "key": "product_id",
+      "required": true
+    },
+    {
+      "id": "variant",
+      "label": "Variant",
+      "type": "lookup",
+      "model": "products:variants",
+      "key": "variant_id",
+      "description": "Leave empty to subscribe to any variant of the product."
+    },
+    {
+      "id": "status",
+      "label": "Status",
+      "type": "select",
+      "default": "waiting",
+      "options": [
+        { "value": "waiting", "label": "Waiting" },
+        { "value": "notified", "label": "Notified" },
+        { "value": "cancelled", "label": "Cancelled" }
+      ]
+    },
+    {
+      "id": "date_notified",
+      "label": "Date notified",
+      "type": "datetime"
+    },
+    {
+      "id": "source",
+      "label": "Source",
+      "type": "text"
+    },
+    {
+      "id": "date_created",
+      "label": "Date created",
+      "type": "datetime"
+    }
+  ],
+  "views": [
+    {
+      "id": "list",
+      "nav": { "label": "Stock alerts", "parent": "products" },
+      "sort": { "date_created": "desc" },
+      "fields": [
+        { "id": "email" },
+        { "id": "product" },
+        { "id": "variant" },
+        { "id": "status" },
+        { "id": "date_created" }
+      ],
+      "tabs": [
+        { "id": "all", "label": "All" },
+        { "id": "waiting", "label": "Waiting", "query": { "where": { "status": "waiting" } } },
+        { "id": "notified", "label": "Notified", "query": { "where": { "status": "notified" } } },
+        { "id": "cancelled", "label": "Cancelled", "query": { "where": { "status": "cancelled" } } }
+      ]
+    },
+    {
+      "id": "record",
+      "fields": [
+        { "id": "email" },
+        { "id": "product", "admin_span": 2 },
+        { "id": "variant", "admin_span": 2 },
+        { "id": "status", "admin_span": 2, "readonly": { "status": "notified" } },
+        { "id": "date_notified", "readonly": true, "admin_span": 2 },
+        { "id": "source", "readonly": true }
+      ]
+    }
+  ]
+}

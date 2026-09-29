@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json.swell.store/model.json",
+  "collection": "low-stock-alerts",
+  "label": "Low stock alerts",
+  "description": "Products whose stock dropped to or below their low-stock threshold.",
+  "fields": {
+    "product_id": {
+      "type": "objectid",
+      "label": "Product ID",
+      "required": true
+    },
+    "product": {
+      "type": "link",
+      "label": "Product",
+      "model": "products",
+      "key": "product_id"
+    },
+    "stock_level": {
+      "type": "int",
+      "label": "Stock level",
+      "description": "Stock level when the alert was raised."
+    },
+    "threshold": {
+      "type": "int",
+      "label": "Threshold",
+      "description": "Low-stock threshold that was crossed."
+    },
+    "status": {
+      "type": "string",
+      "label": "Status",
+      "enum": ["open", "resolved"],
+      "default": "open"
+    },
+    "date_resolved": {
+      "type": "date",
+      "label": "Date resolved"
+    }
+  },
+  "events": {
+    "types": [
+      { "id": "created" },
+      { "id": "updated" },
+      { "id": "deleted" }
+    ]
+  }
+}

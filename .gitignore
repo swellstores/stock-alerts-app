@@ -1,0 +1,9 @@
+node_modules
+.wrangler
+.dev.vars
+.dev.vars.*
+*.tsbuildinfo
+.env
+.env.*
+.DS_Store
+*.log

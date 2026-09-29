@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.swell.store/notification.json",
+  "collection": "low-stock-alerts",
+  "label": "Low stock alert",
+  "description": "Sent to store admins when a product's stock drops to or below its low-stock threshold.",
+  "method": "email",
+  "event": "created",
+  "admin": true,
+  "repeat": false,
+  "subject": "Low stock: {{ product.name }}",
+  "query": {
+    "expand": ["product"]
+  },
+  "sample": {
+    "product_id": "64f1a2b3c4d5e6f7a8b9c0d1",
+    "product": {
+      "id": "64f1a2b3c4d5e6f7a8b9c0d1",
+      "name": "Merino Crew Sweater",
+      "sku": "MCS-NAVY-M"
+    },
+    "stock_level": 3,
+    "threshold": 5,
+    "status": "open"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json.swell.store/setting.json",
+  "label": "Stock Alerts",
+  "description": "Email customers when a product they asked about is back in stock, and alert your team when stock runs low.",
+  "fields": [
+    {
+      "type": "field_group",
+      "label": "Back in stock",
+      "fields": [
+        {
+          "id": "back_in_stock_enabled",
+          "label": "Send back-in-stock emails",
+          "type": "toggle",
+          "default": true,
+          "description": "While off, restocks do not email anyone and subscriptions stay waiting. New subscriptions are still saved. Setting a subscription to Notified by hand in the dashboard always emails the customer."
+        },
+        {
+          "id": "notify_variant_level",
+          "label": "Match subscriptions to the exact variant",
+          "type": "toggle",
+          "default": true,
+          "description": "When on, a subscription made for a specific variant is only notified when that variant is restocked. When off, a product coming back in stock (total from 0 or less to above 0) notifies every subscriber to it whatever variant they chose; a restock of a single variant while the product total is already above 0 still notifies only that variant's subscribers."
+        }
+      ]
+    },
+    {
+      "type": "field_group",
+      "label": "Low stock",
+      "fields": [
+        {
+          "id": "low_stock_enabled",
+          "label": "Alert admins on low stock",
+          "type": "toggle",
+          "default": true,
+          "description": "Email store admins when a product's stock drops to or below its low-stock threshold."
+        },
+        {
+          "id": "low_stock_threshold",
+          "label": "Default low-stock threshold",
+          "type": "number",
+          "digits": 0,
+          "min": 0,
+          "default": 5,
+          "description": "Used for products that have no threshold of their own. Set a per-product threshold on the product's Stock alerts tab."
+        },
+        {
+          "id": "low_stock_digest_enabled",
+          "label": "Daily low-stock digest",
+          "type": "toggle",
+          "default": false,
+          "description": "Send one summary email per day listing every open low-stock alert."
+        }
+      ]
+    }
+  ]
+}

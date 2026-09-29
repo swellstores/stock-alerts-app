@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json.swell.store/content.json",
+  "collection": "low-stock-alerts",
+  "label": "Low stock alerts",
+  "description": "Products whose stock dropped to or below their low-stock threshold",
+  "fields": [
+    {
+      "id": "product",
+      "label": "Product",
+      "type": "lookup",
+      "model": "products",
+      "key": "product_id",
+      "required": true
+    },
+    {
+      "id": "stock_level",
+      "label": "Stock level",
+      "type": "integer"
+    },
+    {
+      "id": "threshold",
+      "label": "Threshold",
+      "type": "integer"
+    },
+    {
+      "id": "status",
+      "label": "Status",
+      "type": "select",
+      "default": "open",
+      "options": [
+        { "value": "open", "label": "Open" },
+        { "value": "resolved", "label": "Resolved" }
+      ]
+    },
+    {
+      "id": "date_created",
+      "label": "Date created",
+      "type": "datetime"
+    }
+  ],
+  "views": [
+    {
+      "id": "list",
+      "nav": { "label": "Low stock alerts", "parent": "products" },
+      "sort": { "date_created": "desc" },
+      "fields": [
+        { "id": "product" },
+        { "id": "stock_level" },
+        { "id": "threshold" },
+        { "id": "status" },
+        { "id": "date_created" }
+      ],
+      "tabs": [
+        { "id": "open", "label": "Open", "query": { "where": { "status": "open" } } },
+        { "id": "resolved", "label": "Resolved", "query": { "where": { "status": "resolved" } } }
+      ]
+    },
+    {
+      "id": "record",
+      "fields": [
+        { "id": "product", "readonly": true },
+        { "id": "stock_level", "readonly": true, "admin_span": 2 },
+        { "id": "threshold", "readonly": true, "admin_span": 2 },
+        { "id": "status", "admin_span": 2 },
+        { "id": "date_created", "readonly": true, "admin_span": 2 }
+      ]
+    }
+  ]
+}

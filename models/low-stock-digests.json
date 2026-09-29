@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.swell.store/model.json",
+  "collection": "low-stock-digests",
+  "label": "Low stock digests",
+  "description": "Daily summaries of open low-stock alerts, one record per digest email.",
+  "fields": {
+    "alert_count": {
+      "type": "int",
+      "label": "Alert count"
+    },
+    "items": {
+      "type": "array",
+      "label": "Items",
+      "value_type": "object",
+      "fields": {
+        "product_id": {
+          "type": "objectid"
+        },
+        "product_name": {
+          "type": "string"
+        },
+        "stock_level": {
+          "type": "int"
+        },
+        "threshold": {
+          "type": "int"
+        }
+      }
+    },
+    "date_sent": {
+      "type": "date",
+      "label": "Date sent"
+    }
+  },
+  "events": {
+    "types": [
+      { "id": "created" },
+      { "id": "updated" },
+      { "id": "deleted" }
+    ]
+  }
+}

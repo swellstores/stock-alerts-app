@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.swell.store/model.json",
+  "collection": "products",
+  "description": "Adds a per-product low-stock threshold and links each product to its back-in-stock subscriptions so the product editor can list them.",
+  "fields": {
+    "stock_subscriptions": {
+      "type": "link",
+      "label": "Stock alerts",
+      "model": "apps/stock_alerts/stock-subscriptions",
+      "value_type": "collection",
+      "params": { "product_id": "id" }
+    },
+    "low_stock_threshold": {
+      "type": "int",
+      "label": "Low-stock threshold",
+      "min": 0,
+      "description": "Alert admins when this product's stock falls to or below this number. Leave empty or 0 to use the app's default threshold."
+    }
+  }
+}

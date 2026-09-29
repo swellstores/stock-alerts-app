@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.swell.store/notification.json",
+  "collection": "stock-subscriptions",
+  "label": "Back in stock",
+  "description": "Sent to a customer when a product they subscribed to is available again.",
+  "method": "email",
+  "event": "updated",
+  "conditions": { "status": "notified" },
+  "contact": "email",
+  "repeat": false,
+  "subject": "{{ product.name }} is back in stock",
+  "query": {
+    "expand": ["product", "variant"]
+  },
+  "fields": [
+    {
+      "id": "intro",
+      "label": "Intro text",
+      "type": "long_text",
+      "default": "Good news, the item you asked about is available again."
+    }
+  ],
+  "sample": {
+    "email": "jane.doe@example.com",
+    "status": "notified",
+    "source": "storefront",
+    "date_notified": "2026-09-29T09:00:00.000Z",
+    "product_id": "64f1a2b3c4d5e6f7a8b9c0d1",
+    "product": {
+      "id": "64f1a2b3c4d5e6f7a8b9c0d1",
+      "name": "Merino Crew Sweater",
+      "slug": "merino-crew-sweater",
+      "price": 89,
+      "images": [
+        {
+          "file": {
+            "url": "https://cdn.schema.io/sample/merino-crew-sweater.jpg"
+          }
+        }
+      ]
+    },
+    "variant_id": "64f1a2b3c4d5e6f7a8b9c0d2",
+    "variant": {
+      "id": "64f1a2b3c4d5e6f7a8b9c0d2",
+      "name": "Navy / Medium",
+      "price": 89
+    }
+  }
+}

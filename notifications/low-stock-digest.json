@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.swell.store/notification.json",
+  "collection": "low-stock-digests",
+  "label": "Low stock digest",
+  "description": "Daily summary sent to store admins listing every open low-stock alert.",
+  "method": "email",
+  "event": "created",
+  "admin": true,
+  "repeat": true,
+  "subject": "Low stock digest: {{ alert_count }} product{% if alert_count != 1 %}s{% endif %}",
+  "sample": {
+    "alert_count": 2,
+    "date_sent": "2026-09-29T08:00:00.000Z",
+    "items": [
+      {
+        "product_id": "64f1a2b3c4d5e6f7a8b9c0d1",
+        "product_name": "Merino Crew Sweater",
+        "stock_level": 3,
+        "threshold": 5
+      },
+      {
+        "product_id": "64f1a2b3c4d5e6f7a8b9c0d3",
+        "product_name": "Canvas Tote Bag",
+        "stock_level": 0,
+        "threshold": 10
+      }
+    ]
+  }
+}
